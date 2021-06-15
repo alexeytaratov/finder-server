@@ -7,10 +7,21 @@ const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 5000;
 const dbUrl = 'mongodb+srv://admin:admin000@offerlist.dfj5o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+// app.use(function(req, res, next) {
+//   res.header("Access-Control-Allow-Origin", "*");
+//   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+//   next();
+// });
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
+  res.header('Access-Control-Allow-Methods', 'POST, DELETE, PUT');
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  next();
+  if ('OPTIONS' == req.method) {
+     res.sendStatus(200);
+  }
+  else {
+    next();
+  }
 });
 app.use(express.json({extended: true}));
 app.use('/api/requests', require('./routes/requests.route'));
