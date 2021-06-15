@@ -7,11 +7,11 @@ const app = express();
 app.use(cors());
 const PORT = process.env.PORT || 5000;
 const dbUrl = 'mongodb+srv://admin:admin000@offerlist.dfj5o.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
-// app.all('*', function (req, res) {
-//   res.header("Access-Control-Allow-Origin", "*");
-//   // res.header("Access-Control-Allow-Headers", "Content-Type,Content-Length, Authorization, Accept,X-Requested-With");
-//   // res.header("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
-// })
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
 app.use(express.json({extended: true}));
 app.use('/api/requests', require('./routes/requests.route'));
 app.use('/api/search', require('./routes/search.route'));
